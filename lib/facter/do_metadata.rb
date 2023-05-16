@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Expose DigitalOcean metadata as a fact
 #
 # This fact purposefully excludes `vendor_data` and `user_data` values
@@ -38,10 +40,10 @@ Facter.add(:do_metadata) do
         data
       end
     rescue JSON::ParserError, Net::OpenTimeout, Net::ReadTimeout, Net::HTTPExceptions => e
-      Facter.log_exception(e,
-                           'DigitalOcean metadata request to http://169.254.169.254:80/metadata/v1.json failed: (%{klass}) %{message}' %
-                           {klass: e.class,
-                            message: e.message})
+      Facter.log_exception(
+        e,
+        'DigitalOcean metadata request to http://169.254.169.254:80/metadata/v1.json failed: (%{class}) %{message}' % {class: e.class, message: e.message},
+      )
       nil
     end
   end
